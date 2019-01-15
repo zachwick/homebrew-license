@@ -13,10 +13,10 @@ The most useful way to use the command is by invoking
 which will print out any known licensing info for that formula.
 
 ```
-brew livecheck
-brew livecheck formula1 formula2 ...
-brew livecheck [-r|--recurse]
-brew livecheck [-h|--help]
+brew licence formula1
+brew license formula1 formula2 ...
+brew licence [-r|--recurse]
+brew license [-h|--help]
 
 Usage:
 Fetch and print the license(s) that the given formula is licensed under. Using `-r` will recurse through the dependency tree printing out `formulaX: License1` pairs.
