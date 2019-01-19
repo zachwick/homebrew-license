@@ -24,6 +24,12 @@ require "optparse"
 licenses = {
   "a2ps" => "GNU GPLv2+",
   "a52dec" => "GNU GPLv2",
+  "aacgain" => "GNU GPLv2",
+  "aalib" => "GNU GPLv2",
+  "aamath" => "GNU GPLv2",
+  "aap" => "GNU GPLv2",
+  "aardvark_shell_utils" => "GNU GPLv2",
+  "abcde" => "GNU GPLv2",
 }
 
 usage = <<EOS
