@@ -15,7 +15,7 @@ which will print out any known licensing info for that formula.
 ```
 brew licence formula1
 brew license formula1 formula2 ...
-brew licence [-r|--recurse]
+brew licence [-r|--recurse] formula1
 brew license [-h|--help]
 
 Usage:
