@@ -49,69 +49,16 @@ show_usage = <<EOS
 EOS
 
 options = {}
-OptionParser.new do |opts|
-  options[:search] = 0
+#OptionParser.new do |opts|
+#  options[:search] = 0
+#
+#  opts.on("-h", "--help", "Display this help message") do
+#    puts usage
+#    exit
+#  end
 
-  opts.on("-h", "--help", "Display this help message") do
-    puts usage
-    exit
-  end
+#  options
+#end.parse!
 
-  opts.on("-d", "--description WANTED", "Search only descriptions") do |w|
-    options[:search] += 1
-    options[:search_type] = :description
-    options[:wanted] = w
-  end
-
-  opts.on("-n", "--name WANTED", "Search only names") do |w|
-    options[:search] += 1
-    options[:search_type] = :name
-    options[:wanted] = w
-  end
-
-  options
-end.parse!
-
-if options[:search] > 1
-  odie too_many_flags
-elsif options[:search] == 1
-  if options[:search_type] == :name
-    candidates = descriptions.find_all do |n, d|
-      n[/#{options[:wanted]}/i]
-    end
-  elsif options[:search_type] == :description
-    candidates = descriptions.find_all do |n, d|
-      d[/#{options[:wanted]}/i]
-    end
-  else
-    candidates = descriptions.find_all do |n, d|
-      n[/#{options[:wanted]}/i] || d[/#{options[:wanted]}/i]
-    end
-  end
-
-  candidates.sort! {|a,b| a[0] <=> b[0]}
-
-  # Tty.<color> variables taken from HOMEBREW_LIBRARY_PATH/utils.rb
-  candidates.each do |name, desc|
-    if desc.empty?
-      msg = "#{Tty.yellow}#{name}#{Tty.reset}: no description yet"
-    else
-      msg = "#{Tty.white}#{name}#{Tty.reset}: #{desc}"
-    end
-
-    puts msg
-  end
-else
-  ARGV.each do |candidate|
-    if descriptions.key?(candidate)
-      if descriptions[candidate].empty?
-        puts "#{Tty.yellow}#{candidate}#{Tty.reset}: no description yet"
-      else
-        puts "#{Tty.white}#{candidate}#{Tty.reset}: #{descriptions[candidate]}"
-      end
-    else
-      opoo "#{candidate} is not a recognized formula name"
-    end
-  end
-end
+puts usage
 
