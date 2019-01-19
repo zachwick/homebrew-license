@@ -22,7 +22,8 @@ require "formula"
 require "optparse"
 
 licenses = {
-  "a2ps" => "Any-to-PostScript filter",
+  "a2ps" => "GNU GPLv2+",
+  "a52dec" => "GNU GPLv2",
 }
 
 usage = <<EOS
