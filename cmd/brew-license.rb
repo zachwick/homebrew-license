@@ -21,6 +21,10 @@
 require "formula"
 require "optparse"
 
+licenses = {
+  "a2ps" => "Any-to-PostScript filter",
+}
+
 usage = <<EOS
 SYNOPSIS
 
@@ -49,16 +53,36 @@ show_usage = <<EOS
 EOS
 
 options = {}
-#OptionParser.new do |opts|
-#  options[:search] = 0
-#
-#  opts.on("-h", "--help", "Display this help message") do
-#    puts usage
-#    exit
-#  end
+OptionParser.new do |opts|
+  options[:search] = 0
 
-#  options
-#end.parse!
+  opts.on("-h", "--help", "Display this help message") do
+    puts usage
+    exit
+  end
 
-puts usage
+  opts.on("-r", "--recurse", "Recurse through all dependencies of the given formula") do |r|
+    options[:search] += 1
+    options[:base] = r
+  end
+  options
+end.parse!
 
+if options[:search] > 1
+  odie too_many_flags
+elsif  options[:search] == 1
+  puts "recurse from #{options[:base]}"
+  exit
+else
+  ARGV.each do |candidate|
+    if licenses.key?(candidate)
+      if licenses[candidate].empty?
+        puts "#{Tty.yellow}#{candidate}#{Tty.reset}: no licensing info yet"
+      else
+        puts "#{Tty.white}#{candidate}#{Tty.reset}: #{licenses[candidate]}"
+      end
+    else
+      opoo "#{candidate} is not a recognized formula name"
+    end
+  end
+end
