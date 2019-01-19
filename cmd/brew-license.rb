@@ -77,9 +77,9 @@ else
   ARGV.each do |candidate|
     if licenses.key?(candidate)
       if licenses[candidate].empty?
-        puts "#{Tty.yellow}#{candidate}#{Tty.reset}: no licensing info yet"
+        puts "#{candidate}: no licensing info yet"
       else
-        puts "#{Tty.white}#{candidate}#{Tty.reset}: #{licenses[candidate]}"
+        puts "#{candidate}: #{licenses[candidate]}"
       end
     else
       opoo "#{candidate} is not a recognized formula name"
