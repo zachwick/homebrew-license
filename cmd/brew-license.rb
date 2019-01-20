@@ -31,7 +31,7 @@ licenses = {
   "aardvark_shell_utils" => "GNU GPLv2",
   "abcde" => "GNU GPLv2",
   "abcl" => "GNU Classpath",
-  "abcm2ps" => "GNU GPLv3, GNU LGPLv3",
+  "abcm2ps" => ["GNU GPLv3", "GNU LGPLv3"],
   "abcmidi" => "",
   "abduco" => "",
   "abi-compliance-checker" => "",
@@ -497,7 +497,6 @@ licenses = {
   "csv-fix" => "",
   "csvprintf" => "",
   "csync" => "",
-  # FIXME: What makes this better than normal ctags?
   "ctags" => "",
   "ctail" => "",
   "ctemplate" => "",
