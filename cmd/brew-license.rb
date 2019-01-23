@@ -21,17 +21,19 @@
 require "formula"
 require "optparse"
 
+# use only SPDX identifiers -> https://spdx.org/licenses/
+# except when a package's license does not have an SPDX identifier
 licenses = {
-  "a2ps" => "GNU GPLv2+",
-  "a52dec" => "GNU GPLv2",
-  "aacgain" => "GNU GPLv2",
-  "aalib" => "GNU GPLv2",
-  "aamath" => "GNU GPLv2",
-  "aap" => "GNU GPLv2",
-  "aardvark_shell_utils" => "GNU GPLv2",
-  "abcde" => "GNU GPLv2",
-  "abcl" => "GNU Classpath",
-  "abcm2ps" => ["GNU GPLv3", "GNU LGPLv3"],
+  "a2ps" => "GPL-2.0-or-later",
+  "a52dec" => "GPL-2.0-only",
+  "aacgain" => "GPL-2.0-only",
+  "aalib" => "GPL-2.0-only",
+  "aamath" => "GPL-2.0-only",
+  "aap" => "GPL-2.0-only",
+  "aardvark_shell_utils" => "GPL-2.0-only",
+  "abcde" => "GPL-2.0-only",
+  "abcl" => "GPL-2.0-only WITH Classpath-exception-2.0",
+  "abcm2ps" => ["GPL-3.0-only", "LGPL-3.0-only"],
   "abcmidi" => "",
   "abduco" => "",
   "abi-compliance-checker" => "",
