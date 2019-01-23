@@ -26,8 +26,12 @@ Options:
 -r, --recurse     recurse through the dependency tree and invoke `brew license <formula>` for each dependency
 ```
 
-## Contributions are welcomed
-If you like this project and you find it useful, help me by adding more Livecheckables or by improving the code (or the non-existing wiki, the readme, etc.).
+## Contributing
+Contributors to this project must read and abide by the [Homebrew Code of Conduct](https://github.com/Homebrew/brew/blob/master/CODE_OF_CONDUCT.md#code-of-conduct).
+
+If you like this project and you find it useful, help us by adding more licensing information or by improving the code (or the non-existing wiki, the readme, etc.).
+
+We're especially open to contributions from people who are beginners to free and open-source software, and will gladly help you get your contributions merged.
 
 ## Changelog
 See the git log.
