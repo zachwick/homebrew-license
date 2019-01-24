@@ -20,6 +20,7 @@
 
 require "formula"
 require "optparse"
+require_relative '../lib/formula_loader'
 
 # use only SPDX identifiers -> https://spdx.org/licenses/
 # except when a package's license does not have an SPDX identifier
@@ -3276,19 +3277,24 @@ end.parse!
 
 if options[:search] > 1
   odie too_many_flags
-elsif  options[:search] == 1
-  puts "recurse from #{options[:base]}"
   exit
-else
+elsif  options[:search] == 1
+  candidates = []
   ARGV.each do |candidate|
-    if licenses.key?(candidate)
-      if licenses[candidate].empty?
-        puts "#{candidate}: no licensing info yet"
-      else
-        puts "#{candidate}: #{licenses[candidate]}"
-      end
+    candidates += Homebrew::FormulaLoader.load_formulas(candidate)
+  end
+else
+  candidates = ARGV
+end
+
+candidates.each do |candidate|
+  if licenses.key?(candidate)
+    if licenses[candidate].empty?
+      puts "#{candidate}: no licensing info yet"
     else
-      opoo "#{candidate} is not a recognized formula name"
+      puts "#{candidate}: #{licenses[candidate]}"
     end
+  else
+    opoo "#{candidate} is not a recognized formula name"
   end
 end
