@@ -1,20 +1,19 @@
----
-name: Licensing Information Modification
-about: This template should be used for adding or editing a formula's licensing information
-title: "[LICENSE] <FORMULA>"
-labels: license
-assignees: ''
+# Is this a licensing information PR?
 
----
+If this is a PR that is adding licensing information for formula, then please make sure that your PR is only adding or editing a single formula's licensing information. If possible, a link to where you found the formula's licensing information would be good to include for tracking purposes.
 
-Please make sure that your PR is only adding or editing a single formula's licensing information.
+Please note that you must use the use only (SPDX identifiers)[https://spdx.org/licenses/]
 
-# Formula Name
+## Formula Name
 
-# License
+## License
 
-You must use the use only (SPDX identifiers)[https://spdx.org/licenses/]
+## License URL (optional)
 
-# License URL (optional)
+# Is this a feature or bugfix PR?
 
-If possible, a link to where you found the formula's licensing information
+## Summary
+
+## Rationale
+
+## How did you test this?
