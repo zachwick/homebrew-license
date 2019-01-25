@@ -33,6 +33,9 @@ If you like this project and you find it useful, help us by adding more licensin
 
 We're especially open to contributions from people who are beginners to free and open-source software, and will gladly help you get your contributions merged.
 
+### Contributing Licensing Information
+When adding licensing information for a formula, please make a single PR for adding just that formula's licensing information. There should be a 1:1 mapping of PRs to licensing data changes. This does add some manual toil creating a PR for a small change, but it allows the project to have an easy way to track each formula's licensing information. 
+
 ## Changelog
 See the git log.
 
