@@ -19,7 +19,7 @@ class TestLicenseIdentifiers < Test::Unit::TestCase
                 if formulae_licenses[formula].is_a? String
                     use_only_spdx_identifiers = spdx_licenses.include? formulae_licenses[formula]
                     unless use_only_spdx_identifiers
-                        unless formulae_licenses[formula].include? 'WITH'
+                        unless formulae_licenses[formula].include? 'WITH' || license.include? 'Custom'
                             puts "Formula #{formula} has license #{formulae_licenses[formula]} which is not comprised of SPDX identifiers"
                             assert_true(false)
                         end
@@ -28,7 +28,7 @@ class TestLicenseIdentifiers < Test::Unit::TestCase
                     formulae_licenses[formula].each do |license|
                         use_only_spdx_identifiers = spdx_licenses.include? license
                         unless use_only_spdx_identifiers
-                            unless license.include? 'WITH'
+                            unless license.include? 'WITH' || license.include? 'Custom"'
                                 puts "Formula #{formula} has license #{license} which is not comprised of SPDX identifiers"
                                 assert_true(false)
                             end
