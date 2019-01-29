@@ -28,7 +28,7 @@ class TestLicenseIdentifiers < Test::Unit::TestCase
                     formulae_licenses[formula].each do |license|
                         use_only_spdx_identifiers = spdx_licenses.include? license
                         unless use_only_spdx_identifiers
-                            unless (license.include? 'WITH') || (license.include? 'Custom')
+                            unless (license.include? 'WITH') || (license.include? 'Custom') || (license.include? 'Public Domain (US)')
                                 puts "Formula #{formula} has license #{license} which is not comprised of SPDX identifiers"
                                 assert_true(false)
                             end
