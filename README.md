@@ -16,14 +16,17 @@ which will print out any known licensing info for that formula.
 brew licence formula1
 brew license formula1 formula2 ...
 brew licence [-r|--recurse] formula1
+brew license [-f|--fetch] formula1
 brew license [-h|--help]
 
 Usage:
 Fetch and print the license(s) that the given formula is licensed under. Using `-r` will recurse through the dependency tree printing out `formulaX: License1` pairs.
 
 Options:
--h, --help        show this help message and exit
 -r, --recurse     recurse through the dependency tree and invoke `brew license <formula>` for each dependency
+-f, --fetch       Attempt to fetch license information for the given formula via the Github License API
+-h, --help        show this help message and exit
+
 ```
 
 ## Contributing
