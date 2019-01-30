@@ -106,7 +106,10 @@ elsif  options[:search] == 1
     candidates += Homebrew::FormulaLoader.load_formulas(candidate, options[:recurse])
   end
 else
-  candidates = ARGV
+  candidates = []
+  ARGV.each do |candidate|
+    candidates += [{name: candidate, homepage: ''}]
+  end
 end
 
 candidates.each do |candidate|
@@ -125,14 +128,14 @@ candidates.each do |candidate|
       puts "#{candidate[:name]}'s homepage is not a Github repo so we can't fetch license info.\nVisit #{candidate[:homepage]} to find licensing info."
     end
   else
-    if licenses.key?(candidate)
-      if licenses[candidate].empty?
-        puts "#{candidate}: no licensing info yet"
+    if licenses.key?(candidate[:name])
+      if licenses[candidate[:name]].empty?
+        puts "#{candidate[:name]}: no licensing info yet"
       else
-        puts "#{candidate}: #{licenses[candidate]}"
+        puts "#{candidate[:name]}: #{licenses[candidate[:name]]}"
       end
     else
-      opoo "#{candidate} is not a recognized formula name"
+      opoo "#{candidate[:name]} is not a recognized formula name"
     end
   end
 end
