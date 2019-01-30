@@ -1,16 +1,18 @@
 module Homebrew
   class FormulaLoader
-    def self.load_formulas(name)
+    def self.load_formulas(name, recurse = false)
       formula = Formulary.factory(name)
-      result = [formula.name]
-      result += get_deps(formula, [])
+      result = [{name: formula.name, homepage: formula.homepage}]
+      if recurse
+        result += get_deps(formula, [])
+      end
       result
     end
 
     private_class_method def self.get_deps(formula, result = [])
       formula.deps.each do |dependency|
         dep = Formulary.factory(dependency.name)
-        result << dep.name
+        result << {name: dep.name, homepage: dep.homepage}
         get_deps(dep, result)
       end
       result

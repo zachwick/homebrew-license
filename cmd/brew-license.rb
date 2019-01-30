@@ -18,9 +18,27 @@
 #:  `-q`, `--quieter`     be more quiet (do not show errors)
 #:  `-d`, `--debug`       show debugging info
 
-require "formula"
-require "optparse"
-require "json"
+# Configure RubyGems.
+REPO_ROOT = Pathname.new "#{File.dirname(__FILE__)}/.."
+VENDOR_RUBY = "#{REPO_ROOT}/vendor/ruby".freeze
+BUNDLER_SETUP = Pathname.new "#{VENDOR_RUBY}/bundler/setup.rb"
+unless BUNDLER_SETUP.exist?
+  Homebrew.install_gem_setup_path! "bundler"
+
+  REPO_ROOT.cd do
+    safe_system "bundle", "install", "--standalone", "--path", "vendor/ruby"
+  end
+end
+require "rbconfig"
+ENV["GEM_HOME"] = ENV["GEM_PATH"] = "#{VENDOR_RUBY}/#{RUBY_ENGINE}/#{RbConfig::CONFIG["ruby_version"]}"
+Gem.clear_paths
+Gem::Specification.reset
+require_relative BUNDLER_SETUP
+
+require 'formula'
+require 'optparse'
+require 'json'
+require 'octokit'
 require_relative '../lib/formula_loader'
 
 # use only SPDX identifiers -> https://spdx.org/licenses/
@@ -34,6 +52,7 @@ SYNOPSIS
 brew licence formula1
 brew license formula1 formula2 ...
 brew licence [-r|--recurse] formula1
+brew license [-f|--fetch] formula1
 brew license [-h|--help]
 
 USAGE
@@ -43,12 +62,14 @@ Fetch and print the license(s) that the given formula is licensed under. Using `
 FLAGS
 
     -r, --recurse          Recurse through the dependency tree and invoke `brew license <formula>` for each dependency
+    -f, --fetch            Attempt to fetch license information for the given formula via the Github License API
     -h, --help             Show this help message
 
 EXAMPLES
 
     brew license erlang python3     # Show licensing information for these items
     brew license -r erlang          # Show licensing information for all formulae in the dependency tree of this item
+    brew licence -f adplug          # Attempt to fetch licensing information for this formula from Github Licenses API
 EOS
 
 show_usage = <<EOS
@@ -59,16 +80,21 @@ options = {}
 OptionParser.new do |opts|
   options[:search] = 0
 
-  opts.on("-h", "--help", "Display this help message") do
+  opts.on('-h', '--help', 'Display this help message') do
     puts usage
     exit
   end
 
-  opts.on("-r", "--recurse", "Recurse through all dependencies of the given formula") do |r|
+  opts.on('-r', '--recurse', 'Recurse through all dependencies of the given formula') do |r|
     options[:search] += 1
-    options[:base] = r
+    options[:recurse] = true
   end
   options
+
+  opts.on('-f', '--fetch', 'Attempt to fetch license information for the given formula via the Github License API') do |r|
+    options[:search] += 1
+    options[:github] = true
+    options[:recurse] = false
 end.parse!
 
 if options[:search] > 1
@@ -77,20 +103,37 @@ if options[:search] > 1
 elsif  options[:search] == 1
   candidates = []
   ARGV.each do |candidate|
-    candidates += Homebrew::FormulaLoader.load_formulas(candidate)
+    candidates += Homebrew::FormulaLoader.load_formulas(candidate, options[:recurse])
   end
 else
   candidates = ARGV
 end
 
 candidates.each do |candidate|
-  if licenses.key?(candidate)
-    if licenses[candidate].empty?
-      puts "#{candidate}: no licensing info yet"
+  if options[:github]
+    # Attempt to fetch license info from Github Licenses API
+    # 1. Is the project's homepage is something github.com or github.io?
+    # 2. If it is, attempt to use the Licenses API
+    # puts("#{candidate[:name]}: #{candidate[:homepage]}")
+    homepage = candidate[:homepage]
+    if homepage.include? 'github.com'
+      hp_parts = homepage.split('/')
+      github_client = Octokit::Client.new
+      license = Octokit.repository_license_contents "#{hp_parts[hp_parts.length - 2]}/#{hp_parts[hp_parts.length - 1]}", :accept => 'application/vnd.github.json'
+      puts "#{candidate[:name]}: \"#{license['license']['spdx_id']}\""
     else
-      puts "#{candidate}: #{licenses[candidate]}"
+      puts "#{candidate[:name]}'s homepage is not a Github repo so we can't fetch license info.\nVisit #{candidate[:homepage]} to find licensing info."
     end
   else
-    opoo "#{candidate} is not a recognized formula name"
+    if licenses.key?(candidate)
+      if licenses[candidate].empty?
+        puts "#{candidate}: no licensing info yet"
+      else
+        puts "#{candidate}: #{licenses[candidate]}"
+      end
+    else
+      opoo "#{candidate} is not a recognized formula name"
+    end
   end
+end
 end
