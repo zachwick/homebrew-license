@@ -89,12 +89,14 @@ OptionParser.new do |opts|
     options[:search] += 1
     options[:recurse] = true
   end
-  options
 
   opts.on('-f', '--fetch', 'Attempt to fetch license information for the given formula via the Github License API') do |r|
     options[:search] += 1
     options[:github] = true
     options[:recurse] = false
+  end
+
+  options
 end.parse!
 
 if options[:search] > 1
@@ -121,8 +123,10 @@ candidates.each do |candidate|
     homepage = candidate[:homepage]
     if homepage.include? 'github.com'
       hp_parts = homepage.split('/')
-      github_client = Octokit::Client.new
-      license = Octokit.repository_license_contents "#{hp_parts[hp_parts.length - 2]}/#{hp_parts[hp_parts.length - 1]}", :accept => 'application/vnd.github.json'
+
+      github_client = Octokit::Client.new()
+
+      license = github_client.repository_license_contents "#{hp_parts[hp_parts.length - 2]}/#{hp_parts[hp_parts.length - 1]}", :accept => 'application/vnd.github.json'
       puts "#{candidate[:name]}: \"#{license['license']['spdx_id']}\""
     else
       puts "#{candidate[:name]}'s homepage is not a Github repo so we can't fetch license info.\nVisit #{candidate[:homepage]} to find licensing info."
@@ -138,5 +142,4 @@ candidates.each do |candidate|
       opoo "#{candidate[:name]} is not a recognized formula name"
     end
   end
-end
 end
