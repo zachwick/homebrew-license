@@ -49,7 +49,10 @@
     "GPL-2.0-only",
     "LGPL-2.0-only"
   ],
-  "agda": "",
+  "agda": [
+    "MIT",
+    "BSD-3-Clause"
+  ],
   "agedu": "",
   "aggregate": "",
   "aha": "",
