@@ -76,6 +76,12 @@ show_usage = <<EOS
 #{usage}
 EOS
 
+too_many_flags = <<EOS
+The -r and -f options are mutually exclusive.
+
+#{usage}
+EOS
+
 options = {}
 OptionParser.new do |opts|
   options[:search] = 0
