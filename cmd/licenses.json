@@ -39,10 +39,16 @@
     "Public Domain (US)"
   ],
   "afio": "",
-  "afl-fuzz": "",
-  "afsctool": "",
-  "aften": "",
-  "afuse": "",
+  "afl-fuzz": "Apache-2.0",
+  "afsctool": "GPL-3.0-only",
+  "aften": [
+    "LGPL-2.0-only",
+    "BSD-3-Clause"
+  ],
+  "afuse": [
+    "GPL-2.0-only",
+    "LGPL-2.0-only"
+  ],
   "agda": "",
   "agedu": "",
   "aggregate": "",
