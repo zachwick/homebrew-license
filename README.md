@@ -8,14 +8,14 @@ External command for showing the license(s) the given formulae are available und
 # Usage
 The most useful way to use the command is by invoking
 
-    $ brew licence formula1
+    $ brew license formula1
 
 which will print out any known licensing info for that formula.
 
 ```
-brew licence formula1
+brew license formula1
 brew license formula1 formula2 ...
-brew licence [-r|--recurse] formula1
+brew license [-r|--recurse] formula1
 brew license [-f|--fetch] formula1
 brew license [-h|--help]
 
