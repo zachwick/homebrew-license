@@ -116,7 +116,7 @@ elsif  options[:search] == 1
 else
   candidates = []
   ARGV.each do |candidate|
-    candidates += [{name: candidate, homepage: ''}]
+    candidates += [{name: candidate, homepage: '', url: ''}]
   end
 end
 
@@ -127,12 +127,20 @@ candidates.each do |candidate|
     # 2. If it is, attempt to use the Licenses API
     # puts("#{candidate[:name]}: #{candidate[:homepage]}")
     homepage = candidate[:homepage]
+    url = candidate[:url]
     if homepage.include? 'github.com'
       hp_parts = homepage.split('/')
 
       github_client = Octokit::Client.new()
 
       license = github_client.repository_license_contents "#{hp_parts[hp_parts.length - 2]}/#{hp_parts[hp_parts.length - 1]}", :accept => 'application/vnd.github.json'
+      puts "#{candidate[:name]}: \"#{license['license']['spdx_id']}\""
+    elsif url.include? 'github.com'
+      url_parts = url.split('/')
+
+      github_client = Octokit::Client.new()
+
+      license = github_client.repository_license_contents "#{url_parts[3]}/#{url_parts[4]}", :accept => 'application/vnd.github.json'
       puts "#{candidate[:name]}: \"#{license['license']['spdx_id']}\""
     else
       puts "#{candidate[:name]}'s homepage is not a Github repo so we can't fetch license info.\nVisit #{candidate[:homepage]} to find licensing info."
