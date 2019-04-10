@@ -23,14 +23,14 @@ REPO_ROOT = Pathname.new "#{File.dirname(__FILE__)}/.."
 VENDOR_RUBY = "#{REPO_ROOT}/vendor/ruby".freeze
 BUNDLER_SETUP = Pathname.new "#{VENDOR_RUBY}/bundler/setup.rb"
 unless BUNDLER_SETUP.exist?
-  Homebrew.install_gem_setup_path! "bundler"
+  Homebrew.install_gem_setup_path! 'bundler'
 
   REPO_ROOT.cd do
-    safe_system "bundle", "install", "--standalone", "--path", "vendor/ruby"
+    safe_system 'bundle', 'install', '--standalone', '--path', 'vendor/ruby'
   end
 end
-require "rbconfig"
-ENV["GEM_HOME"] = ENV["GEM_PATH"] = "#{VENDOR_RUBY}/#{RUBY_ENGINE}/#{RbConfig::CONFIG["ruby_version"]}"
+require 'rbconfig'
+ENV['GEM_HOME'] = ENV['GEM_PATH'] = "#{VENDOR_RUBY}/#{RUBY_ENGINE}/#{RbConfig::CONFIG['ruby_version']}"
 Gem.clear_paths
 Gem::Specification.reset
 require_relative BUNDLER_SETUP
@@ -72,10 +72,6 @@ EXAMPLES
     brew licence -f adplug          # Attempt to fetch licensing information for this formula from Github Licenses API
 EOS
 
-show_usage = <<EOS
-#{usage}
-EOS
-
 too_many_flags = <<EOS
 The -r and -f options are mutually exclusive.
 
@@ -91,12 +87,14 @@ OptionParser.new do |opts|
     exit
   end
 
-  opts.on('-r', '--recurse', 'Recurse through all dependencies of the given formula') do |r|
+  opts.on('-r','--recurse',
+          'Recurse through all dependencies of the given formula') do
     options[:search] += 1
     options[:recurse] = true
   end
 
-  opts.on('-f', '--fetch', 'Attempt to fetch license information for the given formula via the Github License API') do |r|
+  opts.on('-f', '--fetch',
+          'Attempt to fetch license information for the given formula via the Github License API') do
     options[:search] += 1
     options[:github] = true
     options[:recurse] = false
@@ -116,7 +114,7 @@ elsif  options[:search] == 1
 else
   candidates = []
   ARGV.each do |candidate|
-    candidates += [{name: candidate, homepage: '', url: ''}]
+    candidates += [{ name: candidate, homepage: '', url: '' }]
   end
 end
 
@@ -128,17 +126,14 @@ candidates.each do |candidate|
     # puts("#{candidate[:name]}: #{candidate[:homepage]}")
     homepage = candidate[:homepage]
     url = candidate[:url]
+    github_client = Octokit::Client.new
     if homepage.include? 'github.com'
       hp_parts = homepage.split('/')
-
-      github_client = Octokit::Client.new()
 
       license = github_client.repository_license_contents "#{hp_parts[hp_parts.length - 2]}/#{hp_parts[hp_parts.length - 1]}", :accept => 'application/vnd.github.json'
       puts "#{candidate[:name]}: \"#{license['license']['spdx_id']}\""
     elsif url.include? 'github.com'
       url_parts = url.split('/')
-
-      github_client = Octokit::Client.new()
 
       license = github_client.repository_license_contents "#{url_parts[3]}/#{url_parts[4]}", :accept => 'application/vnd.github.json'
       puts "#{candidate[:name]}: \"#{license['license']['spdx_id']}\""
