@@ -100,7 +100,7 @@
   "ant": "Apache-2.0",
   "ant-contrib": "Apache-1.1",
   "ant@1.9": "",
-  "antigen": "",
+  "antigen": "MIT",
   "antiword": "",
   "antlr": "",
   "antlr4-cpp-runtime": "",
