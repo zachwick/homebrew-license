@@ -483,7 +483,7 @@
   "carthage": "MIT",
   "cash-cli": "MIT",
   "cask": "GPL-3.0-only",
-  "cassandra": "",
+  "cassandra": "Apache-2.0",
   "cassandra@2.1": "",
   "cassandra@2.2": "",
   "castxml": "Apache-2.0",
