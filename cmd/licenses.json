@@ -447,7 +447,7 @@
   "bzrtools": "",
   "bzt": "",
   "c-ares": "MIT",
-  "c-blosc": "",
+  "c-blosc": "BSD-3-Clause",
   "c-kermit": "",
   "c10t": "",
   "c14-cli": "MIT",
