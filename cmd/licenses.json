@@ -780,7 +780,7 @@
   "cxxtest": "",
   "cython": "Apache-2.0",
   "czmq": "",
-  "daemon": "",
+  "daemon": "GPL-2.0-or-later",
   "daemonize": "",
   "daemonlogger": "",
   "daemontools": "",
