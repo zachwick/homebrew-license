@@ -93,7 +93,7 @@
   "ansible": "GPL-3.0-only",
   "ansible-cmdb": "GPL-3.0-only",
   "ansible-lint": "MIT",
-  "ansible@1.9": "",
+  "ansible@1.9": "GPL-3.0-only",
   "ansible@2.0": "GPL-3.0-only",
   "ansifilter": "",
   "ansiweather": "BSD-2-Clause",
