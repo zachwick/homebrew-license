@@ -452,7 +452,7 @@
   "c10t": "",
   "c14-cli": "MIT",
   "c2048": "MIT",
-  "cabal-install": "",
+  "cabal-install": "BSD-3-Clause",
   "cabextract": "LGPL-2.1-only",
   "cabocha": "",
   "cadaver": "",
