@@ -1394,7 +1394,7 @@
   "gerrit-tools": "",
   "get-flash-videos": "Apache-2.0",
   "get_iplayer": "GPL-3.0-only",
-  "getdns": "",
+  "getdns": "BSD-3-Clause",
   "getmail": "",
   "gettext": "GPL-3.0-only",
   "getxbook": "",
